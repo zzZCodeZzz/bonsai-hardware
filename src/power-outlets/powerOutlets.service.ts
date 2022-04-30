@@ -13,12 +13,14 @@ export class PowerOutletsService {
     return device;
   }
 
+  // Todo healthcheck mit telegram logging
+
   private async setPowerState(value: boolean) {
     const device = await this.getDevice('192.168.2.109');
     await device.setPowerState(value);
   }
 
-  /*@Cron('0 7 * * *')
+  @Cron('0 7 * * *')
   turnOn() {
     return this.setPowerState(true);
   }
@@ -26,10 +28,5 @@ export class PowerOutletsService {
   @Cron('0 19 * * *')
   turnOff() {
     return this.setPowerState(false);
-  }*/
-
-  @Cron('* * * * *')
-  test() {
-    return this.setPowerState(true);
   }
 }
