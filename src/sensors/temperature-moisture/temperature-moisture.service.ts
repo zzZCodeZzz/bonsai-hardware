@@ -10,7 +10,7 @@ export class TemperatureMoistureService {
 
   @Cron('* * * * *')
   private async readSensor(): Promise<void> {
-    const readout = await dht22sensorLib.read(22, 4);
+    const readout = await dht22sensorLib.read(22, 17);
 
     const temperature = readout.temperature.toFixed(1);
     const humidity = readout.humidity.toFixed(1);
