@@ -1,23 +1,21 @@
-import { Injectable, OnModuleInit } from '@nestjs/common';
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { addDoc, collection } from 'firebase/firestore';
-import { auth, db } from '../../firebase/firebaseConfig';
-import { firebaseUserConfig } from '../../firebase/firebaseUserConfig';
+import { Injectable } from '@nestjs/common';
 import sensorLib from 'node-dht-sensor';
 
 @Injectable()
-export class TemperatureMoistureService implements OnModuleInit {
+export class TemperatureMoistureService {
+  /*
   async onModuleInit() {
-    const userCredential = await signInWithEmailAndPassword(
-      auth,
-      firebaseUserConfig.email,
-      firebaseUserConfig.password,
-    );
+    const email = this.configService.get<string>('firebase_user');
+    const pw = this.configService.get<string>('firebase_pw');
+
+    const userCredential = await signInWithEmailAndPassword(auth, email, pw);
+
     console.log(`The module has been initialized.`);
     const docRef = await addDoc(collection(db, 'test'), {
       wohoo: 'yay',
     });
   }
+*/
 
   private readSensor(): any {
     const readout = sensorLib.read(22, 4);
