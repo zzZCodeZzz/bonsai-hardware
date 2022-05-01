@@ -9,7 +9,7 @@ export class TemperatureMoistureService {
 
   @Cron('* * * * *')
   private async readSensor(): Promise<void> {
-    const readout = dht22sensorLib.read(22, 4);
+    const readout = await dht22sensorLib.read(22, 4);
 
     console.log(
       `[readout] ` +
@@ -17,6 +17,6 @@ export class TemperatureMoistureService {
         `humidity: ${readout.humidity.toFixed(1)}%`,
     );
 
-    await this.firebaseService.safeToFirestore('Dht-22', readout);
+    await this.firebaseService.safeToFirestore('test', readout);
   }
 }
