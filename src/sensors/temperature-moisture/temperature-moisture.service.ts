@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import sensorLib from 'node-dht-sensor';
+import * as dht22sensorLib from 'node-dht-sensor';
 import { FirebaseService } from '../../firebase/firebase.service';
 import { Cron } from '@nestjs/schedule';
 
@@ -9,7 +9,7 @@ export class TemperatureMoistureService {
 
   @Cron('* * * * *')
   private async readSensor(): Promise<void> {
-    const readout = sensorLib.read(22, 4);
+    const readout = dht22sensorLib.read(22, 4);
 
     console.log(
       `[readout] ` +
