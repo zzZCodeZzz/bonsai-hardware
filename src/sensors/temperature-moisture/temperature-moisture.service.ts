@@ -1,23 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import sensorLib from 'node-dht-sensor';
+import { FirebaseService } from '../../firebase/firebase.service';
+import { Cron } from '@nestjs/schedule';
 
 @Injectable()
 export class TemperatureMoistureService {
-  /*
-  async onModuleInit() {
-    const email = this.configService.get<string>('firebase_user');
-    const pw = this.configService.get<string>('firebase_pw');
+  constructor(private firebaseService: FirebaseService) {}
 
-    const userCredential = await signInWithEmailAndPassword(auth, email, pw);
-
-    console.log(`The module has been initialized.`);
-    const docRef = await addDoc(collection(db, 'test'), {
-      wohoo: 'yay',
-    });
-  }
-*/
-
-  private readSensor(): any {
+  @Cron('* * * * *')
+  private async readSensor(): Promise<void> {
     const readout = sensorLib.read(22, 4);
 
     console.log(
@@ -25,5 +16,7 @@ export class TemperatureMoistureService {
         `temperature: ${readout.temperature.toFixed(1)}°C, ` +
         `humidity: ${readout.humidity.toFixed(1)}%`,
     );
+
+    await this.firebaseService.safeToFirestore('Dht-22', readout);
   }
 }
