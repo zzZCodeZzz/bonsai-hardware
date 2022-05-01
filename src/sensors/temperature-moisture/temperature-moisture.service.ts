@@ -21,7 +21,7 @@ export class TemperatureMoistureService {
         `humidity: ${humidity}%`,
     );
 
-    await this.firebaseService.safeToFirestore('test', {
+    await this.firebaseService.safeToFirestore('Dht-22', {
       temperature,
       humidity,
       timeStamp: Timestamp.now(),
