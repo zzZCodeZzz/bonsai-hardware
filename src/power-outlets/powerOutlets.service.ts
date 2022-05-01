@@ -4,29 +4,39 @@ import { Client } from 'tplink-smarthome-api';
 
 @Injectable()
 export class PowerOutletsService {
+  static readonly DeviceIp = '192.168.2.109';
   private hs100client = new Client();
 
-  private async getDevice(host: string) {
-    const device = await this.hs100client.getDevice({ host });
-    const sysInfo = await device.getSysInfo();
-    console.log('sysInfo: ', sysInfo);
-    return device;
+  private getDevice(host = PowerOutletsService.DeviceIp) {
+    return this.hs100client.getDevice({ host });
   }
 
-  // Todo healthcheck mit telegram logging
-
-  private async setPowerState(value: boolean) {
-    const device = await this.getDevice('192.168.2.109');
-    await device.setPowerState(value);
+  // Every Hour.
+  @Cron('0 * * * *')
+  private async healthCheck() {
+    const device = await this.getDevice();
+    try {
+      const sysInfo = await device.getSysInfo();
+      console.log('HealthCheck - 192.168.2.109', sysInfo);
+    } catch (e) {
+      console.log('Device not reachable 192.168.2.109', e);
+    }
   }
 
+  public async setPowerState(onOff: boolean) {
+    const device = await this.getDevice();
+    await device.setPowerState(onOff);
+  }
+
+  // At 07:00.
   @Cron('0 7 * * *')
-  turnOn() {
+  public turnOn() {
     return this.setPowerState(true);
   }
 
+  // At 19:00.
   @Cron('0 19 * * *')
-  turnOff() {
+  public turnOff() {
     return this.setPowerState(false);
   }
 }

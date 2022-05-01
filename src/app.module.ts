@@ -3,7 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { PowerOutletsModule } from './power-outlets/power-outlets.module';
 import { ScheduleModule } from '@nestjs/schedule';
-import { TemperatureMoistureModule } from './sensors/temperature-moisture/temperature-moisture.module';
+import { TemperatureHumidityModule } from './sensors/temperature-humidity/temperature-humidity.module';
 import { ConfigModule } from '@nestjs/config';
 import { FirebaseModule } from './firebase/firebase.module';
 
@@ -15,7 +15,7 @@ import { FirebaseModule } from './firebase/firebase.module';
     }),
     FirebaseModule,
     PowerOutletsModule,
-    TemperatureMoistureModule,
+    TemperatureHumidityModule,
   ],
   controllers: [AppController],
   providers: [AppService],
