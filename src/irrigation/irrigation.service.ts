@@ -15,7 +15,7 @@ export class IrrigationService {
   public async irrigate() {
     const soilMoisture = await this.soilMoistureService.getPercentage();
 
-    if (soilMoisture < 30) {
+    if (soilMoisture < 45) {
       this.pumpService.turnPump('on');
       await delay(3000);
       this.pumpService.turnPump('off');
