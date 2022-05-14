@@ -2,6 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { Cron } from '@nestjs/schedule';
 import { Client } from 'tplink-smarthome-api';
 
+// used this package to control HS100
+// https://github.com/plasticrake/tplink-smarthome-api
+
 @Injectable()
 export class PowerOutletsService {
   static readonly DeviceIp = '192.168.2.109';
@@ -9,6 +12,11 @@ export class PowerOutletsService {
 
   private getDevice(host = PowerOutletsService.DeviceIp) {
     return this.hs100client.getDevice({ host });
+  }
+
+  public async setPowerState(onOff: boolean) {
+    const device = await this.getDevice();
+    await device.setPowerState(onOff);
   }
 
   // Every Hour.
@@ -21,11 +29,6 @@ export class PowerOutletsService {
     } catch (e) {
       console.log('Device not reachable 192.168.2.109', e);
     }
-  }
-
-  public async setPowerState(onOff: boolean) {
-    const device = await this.getDevice();
-    await device.setPowerState(onOff);
   }
 
   // At 07:00.

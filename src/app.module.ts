@@ -6,6 +6,9 @@ import { ScheduleModule } from '@nestjs/schedule';
 import { TemperatureHumidityModule } from './sensors/temperature-humidity/temperature-humidity.module';
 import { ConfigModule } from '@nestjs/config';
 import { FirebaseModule } from './firebase/firebase.module';
+import { SoilMoistureModule } from './sensors/soil-moisture/soil-moisture.module';
+import { PumpModule } from './pumps/pump.module';
+import { IrrigationModule } from './irrigation/irrigation.module';
 
 @Module({
   imports: [
@@ -16,6 +19,9 @@ import { FirebaseModule } from './firebase/firebase.module';
     FirebaseModule,
     PowerOutletsModule,
     TemperatureHumidityModule,
+    SoilMoistureModule,
+    PumpModule,
+    IrrigationModule,
   ],
   controllers: [AppController],
   providers: [AppService],

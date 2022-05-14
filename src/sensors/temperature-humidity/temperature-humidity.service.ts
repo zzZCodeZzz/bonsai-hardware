@@ -12,7 +12,7 @@ import { SensorType } from 'node-dht-sensor';
 export class TemperatureHumidityService {
   static readonly SensorName = 'Dht-22';
   static readonly SensorType: SensorType = 22;
-  static readonly SensorPin: number = 17;
+  static readonly SensorPin: number = 26;
 
   constructor(private firebaseService: FirebaseService) {}
 
