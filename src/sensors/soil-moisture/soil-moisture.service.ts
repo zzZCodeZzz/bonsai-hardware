@@ -35,9 +35,11 @@ export class SoilMoistureService implements OnModuleInit {
   private sensor: SoilMoistureSensor;
 
   public async getPercentage(): Promise<number> {
+    console.log('sensor', this.sensor);
     const results: number[] = [];
     for (let i = 0; i < 99; i++) {
       const percentage = await this.sensor.readPercentage();
+      console.log('percentage', percentage);
       results.push(percentage);
       await delay(1000);
     }
