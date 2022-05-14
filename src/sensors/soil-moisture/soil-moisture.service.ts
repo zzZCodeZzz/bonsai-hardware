@@ -54,7 +54,7 @@ class SoilMoistureSensor {
 export class SoilMoistureService implements OnModuleInit {
   private sensor: SoilMoistureSensor;
 
-  constructor(private firebaseService: FirebaseService) {}
+  constructor() {}
 
   public async getPercentage(): Promise<number> {
     const results: number[] = [];
