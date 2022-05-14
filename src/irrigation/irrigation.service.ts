@@ -1,8 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { SoilMoistureService } from '../sensors/soil-moisture/soil-moisture.service';
 import { PumpService } from '../pumps/pump.service';
-import { Cron } from '@nestjs/schedule';
-import { delay } from 'rxjs';
+import { delay } from '../utils';
 
 @Injectable()
 export class IrrigationService {
