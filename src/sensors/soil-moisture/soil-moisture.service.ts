@@ -1,26 +1,6 @@
 import * as mcpadc from 'mcp-spi-adc';
 import { Injectable, OnModuleInit } from '@nestjs/common';
-import { FirebaseService } from '../../firebase/firebase.service';
 import { delay } from '../../utils';
-
-const tempSensor = mcpadc.openMcp3008(0, (err) => {
-  if (err) throw err;
-  let currentMin = 1000;
-  let currentMax = 0;
-
-  setInterval((_) => {
-    tempSensor.read((err, reading) => {
-      if (err) throw err;
-      console.log('reading', reading);
-      currentMin = Math.min(currentMin, reading.rawValue);
-      currentMax = Math.max(currentMax, reading.rawValue);
-      console.log('min/max', currentMin, currentMax);
-      const rawPercentage = ((reading.rawValue - 437) / 4.17 - 100) * -1;
-      const percentage = rawPercentage < 1 ? 0 : rawPercentage;
-      console.log('percentage', percentage);
-    });
-  }, 1000);
-});
 
 class SoilMoistureSensor {
   constructor(private sensor: any) {}
@@ -53,8 +33,6 @@ class SoilMoistureSensor {
 @Injectable()
 export class SoilMoistureService implements OnModuleInit {
   private sensor: SoilMoistureSensor;
-
-  constructor() {}
 
   public async getPercentage(): Promise<number> {
     const results: number[] = [];
