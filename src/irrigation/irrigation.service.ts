@@ -4,6 +4,7 @@ import { PumpService } from '../pumps/pump.service';
 import { delay } from '../utils';
 import { Cron } from '@nestjs/schedule';
 import { FirebaseService } from '../firebase/firebase.service';
+import { Timestamp } from 'firebase/firestore';
 
 @Injectable()
 export class IrrigationService {
@@ -20,6 +21,7 @@ export class IrrigationService {
 
     await this.firebaseService.safeToFirestore('soilMoisture', {
       percentage: soilMoisture,
+      timestamp: Timestamp.now(),
     });
 
     if (soilMoisture < 38.5) {
