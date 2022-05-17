@@ -24,7 +24,7 @@ export class IrrigationService {
       timestamp: Timestamp.now(),
     });
 
-    if (soilMoisture < 38.5) {
+    if (soilMoisture < 80) {
       this.pumpService.turnPump('on');
       await delay(3000);
       this.pumpService.turnPump('off');
