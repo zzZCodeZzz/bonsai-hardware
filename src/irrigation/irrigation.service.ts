@@ -19,15 +19,23 @@ export class IrrigationService {
   public async irrigate() {
     const soilMoisture = await this.soilMoistureService.getPercentage();
 
-    await this.firebaseService.safeToFirestore('soilMoisture', {
-      percentage: soilMoisture,
-      timestamp: Timestamp.now(),
-    });
+    const timestamp = Timestamp.now();
 
     if (soilMoisture < 81) {
       this.pumpService.turnPump('on');
       await delay(3000);
       this.pumpService.turnPump('off');
+      await delay(3000);
+      const moistAfterWatering = await this.soilMoistureService.getPercentage();
+      await this.firebaseService.safeToFirestore('soilMoisture', {
+        percentage: moistAfterWatering,
+        timestamp,
+      });
+    } else {
+      await this.firebaseService.safeToFirestore('soilMoisture', {
+        percentage: soilMoisture,
+        timestamp,
+      });
     }
   }
 }
