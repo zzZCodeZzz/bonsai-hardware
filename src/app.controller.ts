@@ -16,7 +16,7 @@ export class AppController {
     return this.appService.getHello();
   }*/
 
-  @MessagePattern('plantOne')
+  @MessagePattern('plant')
   plantOne(@Payload() data) {
     console.log('data', data);
     return 'data' + data;
