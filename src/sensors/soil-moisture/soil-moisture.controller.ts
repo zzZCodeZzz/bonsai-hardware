@@ -16,13 +16,15 @@ export class SoilMoistureController {
       message.sensorId,
     );
 
-    console.log('analog mean value', meanValueFromBuffer);
+    console.log('analog mean value raw', meanValueFromBuffer);
 
     if (meanValueFromBuffer > 855) {
       meanValueFromBuffer = 855;
     }
 
-    const percentage = ((meanValueFromBuffer - 437) / 4.17 - 100) * -1;
+    console.log('analog mean value cut', meanValueFromBuffer);
+
+    const percentage = ((meanValueFromBuffer - 482) / 4.17 - 100) * -1;
 
     console.log('percentage', percentage);
     return '';
