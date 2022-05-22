@@ -1,10 +1,21 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import { delay } from '../../utils';
 import { SoilMoistureSensor } from './SoilMoistureSensor';
+import { SoilMoistureMessage } from './SoilMoisture';
+import { RingBufferMap } from '../../ring-buffer/RingBuffer';
 
 @Injectable()
 export class SoilMoistureService implements OnModuleInit {
   private sensor: SoilMoistureSensor;
+
+  private ringBuffers = new RingBufferMap<SoilMoistureMessage>(
+    ['zitronen-melisse'],
+    100,
+  );
+
+  async onModuleInit() {
+    this.sensor = await SoilMoistureSensor.Create();
+  }
 
   public async getPercentage(): Promise<number> {
     const results: number[] = [];
@@ -17,7 +28,14 @@ export class SoilMoistureService implements OnModuleInit {
     return sum / results.length;
   }
 
-  async onModuleInit() {
-    this.sensor = await SoilMoistureSensor.Create();
+  queToRingBuffer(message: SoilMoistureMessage): void {
+    this.ringBuffers.get(message.sensorId).que(message);
+  }
+
+  getMeanValueFromBuffer(bufferId: string): number {
+    return this.ringBuffers
+      .get(bufferId)
+      .getAll()
+      .reduce((acc, cur) => acc + cur.analogReadValue, 0);
   }
 }
