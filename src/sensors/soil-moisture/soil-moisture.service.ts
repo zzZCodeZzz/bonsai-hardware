@@ -33,9 +33,10 @@ export class SoilMoistureService implements OnModuleInit {
   }
 
   getMeanValueFromBuffer(bufferId: string): number {
-    return this.ringBuffers
-      .get(bufferId)
-      .getAll()
-      .reduce((acc, cur) => acc + cur.analogReadValue, 0);
+    const ringBufferContent = this.ringBuffers.get(bufferId).getAll();
+    return (
+      ringBufferContent.reduce((acc, cur) => acc + cur.analogReadValue, 0) /
+      ringBufferContent.length
+    );
   }
 }
