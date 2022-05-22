@@ -12,15 +12,15 @@ export class SoilMoistureController {
     @Payload() message: SoilMoistureMessage,
   ): Promise<string> {
     this.soilMoistureService.queToRingBuffer(message);
-    const meanValueFromBuffer = this.soilMoistureService.getMeanValueFromBuffer(
+    let meanValueFromBuffer = this.soilMoistureService.getMeanValueFromBuffer(
       message.sensorId,
     );
 
     console.log('analog mean value raw', meanValueFromBuffer);
 
-    /*  if (meanValueFromBuffer > 855) {
+    if (meanValueFromBuffer > 855) {
       meanValueFromBuffer = 855;
-    }*/
+    }
 
     console.log('analog mean value cut', meanValueFromBuffer);
 
