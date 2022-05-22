@@ -1,17 +1,24 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller } from '@nestjs/common';
 import { AppService } from './app.service';
 import { IrrigationService } from './irrigation/irrigation.service';
+import { MessagePattern, Payload } from '@nestjs/microservices';
 
-@Controller()
+@Controller('plant')
 export class AppController {
   constructor(
     private readonly appService: AppService,
     private readonly irrigationService: IrrigationService,
   ) {}
 
-  @Get()
+  /*@Get()
   async getHello(): Promise<string> {
     await this.irrigationService.irrigate();
     return this.appService.getHello();
+  }*/
+
+  @MessagePattern('plantOne')
+  plantOne(@Payload() data) {
+    console.log('data', data);
+    return 'data' + data;
   }
 }
