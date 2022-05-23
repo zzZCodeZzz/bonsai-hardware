@@ -47,8 +47,9 @@ export class IrrigationService {
     const percentage =
       this.soilMoistureService.getPercentageFromRingBuffer('zitronen-melisse');
 
+    console.log('percentage', percentage);
     if (percentage < 50) {
-      this.client.emit('/pump/zitronen-melisse', {
+      await this.client.emit('/pump/zitronen-melisse', {
         mode: 'start',
         seconds: 3,
       });
