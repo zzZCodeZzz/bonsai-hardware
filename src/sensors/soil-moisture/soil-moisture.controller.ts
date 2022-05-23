@@ -12,19 +12,18 @@ export class SoilMoistureController {
     @Payload() message: SoilMoistureMessage,
   ): Promise<string> {
     this.soilMoistureService.queToRingBuffer(message);
-    let meanValueFromBuffer = this.soilMoistureService.getMeanValueFromBuffer(
-      message.sensorId,
-    );
+    const meanValueFromBuffer =
+      this.soilMoistureService.getMeanValueFromRingBuffer(message.sensorId);
 
-    console.log('analog mean value raw', meanValueFromBuffer);
+    /*console.log('analog mean value raw', meanValueFromBuffer);
 
     if (meanValueFromBuffer > 855) {
       meanValueFromBuffer = 855;
-    }
+    }*/
 
-    console.log('analog mean value cut', meanValueFromBuffer);
+    /*console.log('analog mean value cut', meanValueFromBuffer);*/
 
-    const percentage = ((meanValueFromBuffer - 482) / 4.17 - 100) * -1;
+    const percentage = ((meanValueFromBuffer - 544) / 4.8 - 100) * -1;
 
     console.log('percentage', percentage);
     return '';
