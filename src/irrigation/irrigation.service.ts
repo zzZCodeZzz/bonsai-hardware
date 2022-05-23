@@ -13,7 +13,7 @@ export class IrrigationService {
     private soilMoistureService: SoilMoistureService,
     private pumpService: PumpService,
     private firebaseService: FirebaseService,
-    @Inject('MQTT_SERVICE') private mqttClient: ClientProxy,
+    @Inject('MQTT_SERVICE') private client: ClientProxy,
   ) {}
 
   // At every 30th minute.
@@ -48,7 +48,7 @@ export class IrrigationService {
       this.soilMoistureService.getPercentageFromRingBuffer('zitronen-melisse');
 
     if (percentage < 50) {
-      this.mqttClient.emit('/pump/zitronen-melisse', {
+      this.client.emit('/pump/zitronen-melisse', {
         mode: 'start',
         seconds: 3,
       });
