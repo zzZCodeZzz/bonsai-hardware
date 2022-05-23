@@ -10,22 +10,7 @@ export class SoilMoistureController {
   @MessagePattern('/soil-moisture')
   async receiveSoilMoistureMessage(
     @Payload() message: SoilMoistureMessage,
-  ): Promise<string> {
+  ): Promise<void> {
     this.soilMoistureService.queToRingBuffer(message);
-    const meanValueFromBuffer =
-      this.soilMoistureService.getMeanValueFromRingBuffer(message.sensorId);
-
-    /*console.log('analog mean value raw', meanValueFromBuffer);
-
-    if (meanValueFromBuffer > 855) {
-      meanValueFromBuffer = 855;
-    }*/
-
-    /*console.log('analog mean value cut', meanValueFromBuffer);*/
-
-    const percentage = ((meanValueFromBuffer - 544) / 4.8 - 100) * -1;
-
-    console.log('percentage', percentage);
-    return '';
   }
 }

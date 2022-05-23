@@ -21,11 +21,12 @@ export class RingBuffer<T> {
   }
 }
 
-export class RingBufferMap<T> {
-  private map: Record<string, RingBuffer<T>> = {};
+export class RingBufferMap<T, K extends string> {
+  private bufferSize: number;
+  private map: Record<K, RingBuffer<T>>;
 
-  constructor(ringBuffers: string[], bufferSize: number) {
-    this.map = ringBuffers.reduce((acc, cur) => {
+  constructor(bufferSize: number) {
+    /* this.map = ringBuffers.reduce((acc, cur) => {
       if (!acc[cur]) {
         return {
           ...acc,
@@ -33,14 +34,14 @@ export class RingBufferMap<T> {
         };
       }
       return acc;
-    }, {} as Record<string, RingBuffer<T>>);
+    }, {} as Record<K, RingBuffer<T>>);*/
+    this.bufferSize = bufferSize;
+    this.map = {} as Record<K, RingBuffer<T>>;
   }
 
-  get(ringBufferName: string): RingBuffer<T> {
+  get(ringBufferName: K): RingBuffer<T> {
     if (this.map[ringBufferName] === undefined) {
-      throw new InternalServerErrorException(
-        `ring buffer ${ringBufferName} does not exist`,
-      );
+      this.map[ringBufferName] = new RingBuffer(this.bufferSize);
     }
     return this.map[ringBufferName];
   }
