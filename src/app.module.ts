@@ -36,5 +36,6 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
   ],
   controllers: [AppController],
   providers: [AppService, IrrigationService],
+  exports: ['MQTT_SERVICE'],
 })
 export class AppModule {}
