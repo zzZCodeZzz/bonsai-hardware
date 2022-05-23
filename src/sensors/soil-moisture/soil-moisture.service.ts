@@ -28,7 +28,7 @@ export class SoilMoistureService implements OnModuleInit {
   }
 
   queToRingBuffer(message: SoilMoistureMessage): void {
-    this.ringBuffers.get(message.sensorId as SensorId).que(message);
+    this.ringBuffers.get(message.sensorId as SensorId).enqueue(message);
   }
 
   private getMeanValueFromRingBuffer(bufferId: SensorId): number {
@@ -40,6 +40,7 @@ export class SoilMoistureService implements OnModuleInit {
   }
 
   getPercentageFromRingBuffer(bufferId: SensorId): number {
+    console.log(this.ringBuffers.get('zitronen-melisse').getAll());
     const analogReadValue = this.getMeanValueFromRingBuffer(bufferId);
     let percentage = ((analogReadValue - 544) / 4.8 - 100) * -1;
     if (percentage < 0) {

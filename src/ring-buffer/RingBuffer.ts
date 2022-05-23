@@ -5,12 +5,12 @@ export class RingBuffer<T> {
 
   constructor(public maxSize: number) {}
 
-  public que(newElement: T) {
+  public enqueue(newElement: T) {
     if (this.buffer.length > this.maxSize) {
       throw new InternalServerErrorException('ring buffer full');
     }
     if (this.buffer.length === this.maxSize) {
-      this.buffer = [newElement, ...this.buffer.slice(-1)];
+      this.buffer = [newElement, ...this.buffer.slice(0, -1)];
     } else {
       this.buffer = [newElement, ...this.buffer];
     }
