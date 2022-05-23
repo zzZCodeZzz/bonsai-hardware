@@ -9,7 +9,6 @@ import { FirebaseModule } from './firebase/firebase.module';
 import { SoilMoistureModule } from './sensors/soil-moisture/soil-moisture.module';
 import { PumpModule } from './pumps/pump.module';
 import { IrrigationModule } from './irrigation/irrigation.module';
-import { IrrigationService } from './irrigation/irrigation.service';
 
 @Module({
   imports: [
@@ -25,6 +24,6 @@ import { IrrigationService } from './irrigation/irrigation.service';
     IrrigationModule,
   ],
   controllers: [AppController],
-  providers: [AppService, IrrigationService],
+  providers: [AppService],
 })
 export class AppModule {}
