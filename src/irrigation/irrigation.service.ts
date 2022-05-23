@@ -1,11 +1,10 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { SoilMoistureService } from '../sensors/soil-moisture/soil-moisture.service';
 import { PumpService } from '../pumps/pump.service';
 import { delay } from '../utils';
 import { Cron } from '@nestjs/schedule';
 import { FirebaseService } from '../firebase/firebase.service';
 import { Timestamp } from 'firebase/firestore';
-import { ClientProxy } from '@nestjs/microservices';
 
 @Injectable()
 export class IrrigationService {
@@ -13,7 +12,6 @@ export class IrrigationService {
     private soilMoistureService: SoilMoistureService,
     private pumpService: PumpService,
     private firebaseService: FirebaseService,
-    @Inject('MQTT_SERVICE') private client: ClientProxy,
   ) {}
 
   // At every 30th minute.
@@ -47,11 +45,11 @@ export class IrrigationService {
     const percentage =
       this.soilMoistureService.getPercentageFromRingBuffer('zitronen-melisse');
 
-    if (percentage < 50) {
+    /* if (percentage < 50) {
       this.client.emit('/pump/zitronen-melisse', {
         mode: 'start',
         seconds: 3,
       });
-    }
+    }*/
   }
 }

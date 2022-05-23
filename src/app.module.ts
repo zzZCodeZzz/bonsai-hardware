@@ -10,9 +10,19 @@ import { SoilMoistureModule } from './sensors/soil-moisture/soil-moisture.module
 import { PumpModule } from './pumps/pump.module';
 import { IrrigationModule } from './irrigation/irrigation.module';
 import { IrrigationService } from './irrigation/irrigation.service';
+import { ClientsModule, Transport } from '@nestjs/microservices';
 
 @Module({
   imports: [
+    ClientsModule.register([
+      {
+        name: 'MQTT_SERVICE',
+        transport: Transport.MQTT,
+        options: {
+          url: 'mqtt://localhost:1883',
+        },
+      },
+    ]),
     ScheduleModule.forRoot(),
     ConfigModule.forRoot({
       isGlobal: true,
