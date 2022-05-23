@@ -1,10 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { SoilMoistureService } from '../sensors/soil-moisture/soil-moisture.service';
 import { PumpService } from '../pumps/pump.service';
 import { delay } from '../utils';
 import { Cron } from '@nestjs/schedule';
 import { FirebaseService } from '../firebase/firebase.service';
 import { Timestamp } from 'firebase/firestore';
+import { ClientProxy } from '@nestjs/microservices';
 
 @Injectable()
 export class IrrigationService {
@@ -12,6 +13,7 @@ export class IrrigationService {
     private soilMoistureService: SoilMoistureService,
     private pumpService: PumpService,
     private firebaseService: FirebaseService,
+    @Inject('MQTT_SERVICE') private client: ClientProxy,
   ) {}
 
   // At every 30th minute.

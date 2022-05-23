@@ -1,9 +1,8 @@
-import { Inject, Injectable } from '@nestjs/common';
-import { ClientProxy } from '@nestjs/microservices';
+import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class AppService {
-  constructor(@Inject('MQTT_SERVICE') private client: ClientProxy) {}
+  constructor() {}
   getHello(): string {
     return 'Irrigate!';
   }

@@ -1,13 +1,10 @@
-import { Controller, Inject } from '@nestjs/common';
+import { Controller } from '@nestjs/common';
 import { AppService } from './app.service';
-import { ClientProxy, MessagePattern } from '@nestjs/microservices';
+import { MessagePattern } from '@nestjs/microservices';
 
 @Controller()
 export class AppController {
-  constructor(
-    private readonly appService: AppService,
-    @Inject('MQTT_SERVICE') private client: ClientProxy,
-  ) {}
+  constructor(private readonly appService: AppService) {}
 
   @MessagePattern('health-check')
   async getHello(): Promise<string> {
