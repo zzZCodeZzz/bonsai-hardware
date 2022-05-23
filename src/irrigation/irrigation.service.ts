@@ -47,11 +47,11 @@ export class IrrigationService {
     const percentage =
       this.soilMoistureService.getPercentageFromRingBuffer('zitronen-melisse');
 
-    /* if (percentage < 50) {
+    if (percentage < 50) {
       this.client.emit('/pump/zitronen-melisse', {
         mode: 'start',
         seconds: 3,
       });
-    }*/
+    }
   }
 }
