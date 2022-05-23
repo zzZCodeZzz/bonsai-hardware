@@ -28,7 +28,13 @@ export class SoilMoistureService implements OnModuleInit {
   }
 
   queToRingBuffer(message: SoilMoistureMessage): void {
-    this.ringBuffers.get(message.sensorId as SensorId).enqueue(message);
+    console.log('message', message);
+    const soilMoistureMessageRingBuffer = this.ringBuffers.get(
+      message.sensorId as SensorId,
+    );
+    console.log('buffer', soilMoistureMessageRingBuffer);
+    soilMoistureMessageRingBuffer.enqueue(message);
+    console.log('enqued');
   }
 
   private getMeanValueFromRingBuffer(bufferId: SensorId): number {
