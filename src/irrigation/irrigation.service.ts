@@ -1,10 +1,8 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { SoilMoistureService } from '../sensors/soil-moisture/soil-moisture.service';
 import { PumpService } from '../pumps/pump.service';
-import { delay } from '../utils';
 import { Cron } from '@nestjs/schedule';
 import { FirebaseService } from '../firebase/firebase.service';
-import { Timestamp } from 'firebase/firestore';
 import { ClientProxy } from '@nestjs/microservices';
 
 @Injectable()
@@ -42,12 +40,11 @@ export class IrrigationService {
   }*/
 
   // At every 30th minute.
-  @Cron('*/30 * * * *')
+  @Cron('*/1 * * * *')
   public async newIrrigate() {
     const percentage =
       this.soilMoistureService.getPercentageFromRingBuffer('zitronen-melisse');
 
-    console.log('percentage', percentage);
     console.log('percentage', percentage);
     if (percentage < 81) {
       await this.client.emit('/pump/zitronen-melisse', {
