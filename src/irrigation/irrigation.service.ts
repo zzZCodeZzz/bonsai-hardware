@@ -4,6 +4,7 @@ import { PumpService } from '../pumps/pump.service';
 import { Cron } from '@nestjs/schedule';
 import { FirebaseService } from '../firebase/firebase.service';
 import { ClientProxy } from '@nestjs/microservices';
+import { Timestamp } from 'firebase/firestore';
 
 @Injectable()
 export class IrrigationService {
@@ -26,5 +27,10 @@ export class IrrigationService {
         seconds: 3,
       });
     }
+
+    await this.firebaseService.safeToFirestore('soilMoisture', {
+      percentage,
+      timestamp: Timestamp.now(),
+    });
   }
 }
