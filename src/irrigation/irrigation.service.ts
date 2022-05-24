@@ -17,7 +17,7 @@ export class IrrigationService {
   ) {}
 
   // At every 30th minute.
-  @Cron('*/30 * * * *')
+  /* @Cron('*!/30 * * * *')
   public async irrigate() {
     const soilMoisture = await this.soilMoistureService.getPercentage();
 
@@ -39,16 +39,17 @@ export class IrrigationService {
         timestamp,
       });
     }
-  }
+  }*/
 
   // At every 30th minute.
-  @Cron('*/1 * * * *')
+  @Cron('*/30 * * * *')
   public async newIrrigate() {
     const percentage =
       this.soilMoistureService.getPercentageFromRingBuffer('zitronen-melisse');
 
     console.log('percentage', percentage);
-    if (percentage < 50) {
+    console.log('percentage', percentage);
+    if (percentage < 81) {
       await this.client.emit('/pump/zitronen-melisse', {
         mode: 'start',
         seconds: 3,
