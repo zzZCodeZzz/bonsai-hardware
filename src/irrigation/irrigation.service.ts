@@ -42,7 +42,7 @@ export class IrrigationService {
   }
 
   // At every 30th minute.
-  /* @Cron('*!/1 * * * *')
+  @Cron('*/1 * * * *')
   public async newIrrigate() {
     const percentage =
       this.soilMoistureService.getPercentageFromRingBuffer('zitronen-melisse');
@@ -54,5 +54,5 @@ export class IrrigationService {
         seconds: 3,
       });
     }
-  }*/
+  }
 }
